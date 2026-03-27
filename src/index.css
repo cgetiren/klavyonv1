@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@keyframes InformationAnimate{
+    from{
+        opacity: 0;
+    }
+
+    to{
+        opacity: 1;
+    }
+}

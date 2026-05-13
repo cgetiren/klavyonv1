@@ -15,9 +15,9 @@ function DurationTabs() {
     const getBtnClass = (mode: string) => {
         let base = "px-4 py-3 text-xs sm:text-sm font-bold tracking-[0.2em] uppercase transition-colors duration-200 border-b-2 ";
         if (testMode === mode) {
-            base += "border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100";
+            base += "border-[var(--swiss-text)] text-[var(--swiss-text)]";
         } else {
-            base += "border-transparent text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100";
+            base += "border-transparent text-neutral-400 hover:text-[var(--swiss-text)]";
         }
         return base;
     };

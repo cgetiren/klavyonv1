@@ -37,32 +37,32 @@ function RealTimeStats() {
     };
 
     return (
-        <div className="max-w-5xl w-full mx-auto flex justify-between items-end text-neutral-900 dark:text-neutral-100 pb-8 mb-8 border-b border-neutral-200 dark:border-neutral-800">
+        <div className="max-w-5xl w-full mx-auto flex justify-between items-end text-[var(--swiss-text)] pb-8 mb-8 border-b border-[var(--swiss-border)]">
             <div className="flex gap-12 items-end">
                 <div className="flex flex-col">
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-2">
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 mb-2">
                         {testMode === 'infinite' ? 'ELAPSED' : 'REMAINING'}
                     </span>
                     <span className="text-5xl font-black tabular-nums leading-none">
-                        {testMode === 'infinite' ? elapsedTime : timeRemaining}<span className="text-sm font-bold ml-1 text-neutral-400 dark:text-neutral-500">s</span>
+                        {testMode === 'infinite' ? elapsedTime : timeRemaining}<span className="text-sm font-bold ml-1 text-neutral-400">s</span>
                     </span>
                 </div>
                 
                 <div className="flex flex-col">
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-2">WPM</span>
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 mb-2">WPM</span>
                     <span className="text-5xl font-black tabular-nums leading-none">{calculateWPM()}</span>
                 </div>
 
                 <div className="flex flex-col">
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-2">ACCURACY</span>
-                    <span className="text-5xl font-black tabular-nums leading-none">{calculateAccuracy()}<span className="text-sm font-bold text-neutral-400 dark:text-neutral-500">%</span></span>
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 mb-2">ACCURACY</span>
+                    <span className="text-5xl font-black tabular-nums leading-none">{calculateAccuracy()}<span className="text-sm font-bold text-neutral-400">%</span></span>
                 </div>
             </div>
 
             {testMode === 'infinite' && isStarted && !isComplete && (
                 <button 
                     onClick={() => dispatch(finishTest())}
-                    className="border-2 border-neutral-900 dark:border-neutral-100 hover:bg-neutral-900 dark:hover:bg-neutral-100 hover:text-white dark:hover:text-black px-8 py-3 font-black transition-all duration-200 text-xs uppercase tracking-widest"
+                    className="border-2 border-[var(--swiss-text)] hover:bg-[var(--swiss-text)] hover:text-[var(--swiss-bg)] px-8 py-3 font-black transition-all duration-200 text-xs uppercase tracking-widest"
                 >
                     Finish Test
                 </button>

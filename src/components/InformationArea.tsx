@@ -29,35 +29,35 @@ function InformationArea() {
     return (
         <div className="max-w-5xl mx-auto w-full my-12 animate-[InformationAnimate_0.6s_ease-out]">
             <Certificate wpm={wpm} accuracy={accuracy} testMode={testMode} />
-            <div className="flex flex-col md:flex-row justify-between items-start gap-12 border-b border-neutral-200 dark:border-neutral-800 pb-12">
+            <div className="flex flex-col md:flex-row justify-between items-start gap-12 border-b border-[var(--swiss-border)] pb-12">
                 <div className="flex flex-col">
-                    <h1 className="text-xs font-black tracking-[0.3em] uppercase text-neutral-400 dark:text-neutral-500 mb-4">{titleText}</h1>
+                    <h1 className="text-xs font-black tracking-[0.3em] uppercase text-neutral-400 mb-4">{titleText}</h1>
                     <div className="flex items-baseline gap-4">
-                        <span className="text-[12rem] font-black leading-none tracking-tighter text-neutral-900 dark:text-neutral-100">{wpm}</span>
-                        <span className="text-2xl font-black text-neutral-400 dark:text-neutral-500 uppercase tracking-widest">WPM</span>
+                        <span className="text-[12rem] font-black leading-none tracking-tighter text-[var(--swiss-text)]">{wpm}</span>
+                        <span className="text-2xl font-black text-neutral-400 uppercase tracking-widest">WPM</span>
                     </div>
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-x-16 gap-y-8 mt-4">
                     <div className="flex flex-col">
-                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-1">TOTAL WORDS</span>
-                        <span className="text-4xl font-black text-neutral-900 dark:text-neutral-100">{totalWordsAttempted}</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 mb-1">TOTAL WORDS</span>
+                        <span className="text-4xl font-black text-[var(--swiss-text)]">{totalWordsAttempted}</span>
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-1">CORRECT</span>
-                        <span className="text-4xl font-black text-neutral-900 dark:text-neutral-100">{correctCount}</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 mb-1">CORRECT</span>
+                        <span className="text-4xl font-black text-[var(--swiss-text)]">{correctCount}</span>
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-1">INCORRECT</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 mb-1">INCORRECT</span>
                         <span className="text-4xl font-black text-red-600 dark:text-red-500">{rejectCount}</span>
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-1">ACCURACY</span>
-                        <span className="text-4xl font-black text-neutral-900 dark:text-neutral-100">{accuracy}%</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 mb-1">ACCURACY</span>
+                        <span className="text-4xl font-black text-[var(--swiss-text)]">{accuracy}%</span>
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-1">KPM (KEYS)</span>
-                        <span className="text-4xl font-black text-neutral-900 dark:text-neutral-100">{kpm}</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 mb-1">KPM (KEYS)</span>
+                        <span className="text-4xl font-black text-[var(--swiss-text)]">{kpm}</span>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@ function InformationArea() {
             <div className="flex flex-col md:flex-row gap-6 mt-12 items-center">
                 <button 
                     onClick={() => dispatch(resetToTest())} 
-                    className="w-full md:w-auto bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black px-12 py-5 hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-all duration-200 font-black uppercase tracking-widest text-sm" 
+                    className="w-full md:w-auto bg-[var(--swiss-text)] text-[var(--swiss-bg)] px-12 py-5 hover:opacity-90 transition-all duration-200 font-black uppercase tracking-widest text-sm" 
                     type="button"
                 >
                     Try Again
@@ -73,7 +73,7 @@ function InformationArea() {
                 <button 
                     onClick={() => dispatch(startReplay())} 
                     disabled={isReplaying}
-                    className={`w-full md:w-auto border-2 px-12 py-5 font-black uppercase tracking-widest text-sm transition-all duration-200 ${isReplaying ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 dark:text-neutral-500 border-neutral-100 dark:border-neutral-800 cursor-not-allowed' : 'border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-900 dark:hover:bg-neutral-100 hover:text-white dark:hover:text-black'}`} 
+                    className={`w-full md:w-auto border-2 px-12 py-5 font-black uppercase tracking-widest text-sm transition-all duration-200 ${isReplaying ? 'bg-[var(--swiss-border)] text-neutral-400 border-[var(--swiss-border)] cursor-not-allowed' : 'border-[var(--swiss-text)] text-[var(--swiss-text)] hover:bg-[var(--swiss-text)] hover:text-[var(--swiss-bg)]'}`} 
                     type="button"
                 >
                     {isReplaying ? "Watching..." : "Watch Replay"}

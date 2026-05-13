@@ -23,7 +23,7 @@ interface dataType {
     wordStatuses: Record<number, string>,
     keystrokeRecord: Array<{ key: string, timeOffset: number, isCorrect: boolean }>,
     isReplaying: boolean,
-    theme: 'light' | 'dark'
+    theme: 'light' | 'dark' | 'retro' | 'artdeco'
 }
 
 const initialState: dataType = {
@@ -54,7 +54,10 @@ export const WordSlice = createSlice({
     initialState,
     reducers: {
         toggleTheme(state: dataType): void {
-            state.theme = state.theme === 'light' ? 'dark' : 'light';
+            if (state.theme === 'light') state.theme = 'dark';
+            else if (state.theme === 'dark') state.theme = 'retro';
+            else if (state.theme === 'retro') state.theme = 'artdeco';
+            else state.theme = 'light';
         },
         getWords(state: dataType): void {
             const shuffled = [...data.kelimeler].sort(() => 0.5 - Math.random());

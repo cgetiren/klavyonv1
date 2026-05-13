@@ -108,7 +108,7 @@ function VirtualKeyboard() {
     }, [isReplaying, keystrokeRecord, elapsedTime, dispatch]);
 
     const getKeyStyle = (key: string) => {
-        let baseStyle = "flex items-center justify-center border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 font-bold uppercase transition-all duration-100 ";
+        let baseStyle = "flex items-center justify-center border border-[var(--swiss-border)] bg-[var(--swiss-bg)] text-[var(--swiss-text)] font-bold uppercase transition-all duration-100 ";
         
         let widthStr = "w-10 h-10 sm:w-16 sm:h-16 text-sm sm:text-lg"; 
         
@@ -128,12 +128,12 @@ function VirtualKeyboard() {
         if (isActive) {
             if (isReplaying) {
                 if (activeInfo.isCorrect) {
-                    baseStyle = "flex items-center justify-center bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black scale-95 z-10 transition-all duration-75 ";
+                    baseStyle = "flex items-center justify-center bg-[var(--swiss-text)] text-[var(--swiss-bg)] scale-95 z-10 transition-all duration-75 ";
                 } else {
-                    baseStyle = "flex items-center justify-center bg-red-600 dark:bg-red-500 text-white scale-95 z-10 transition-all duration-75 ";
+                    baseStyle = "flex items-center justify-center bg-red-600 text-white scale-95 z-10 transition-all duration-75 ";
                 }
             } else {
-                baseStyle = "flex items-center justify-center bg-neutral-200 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 scale-95 z-10 transition-all duration-75 ";
+                baseStyle = "flex items-center justify-center bg-[var(--swiss-border)] text-[var(--swiss-text)] scale-95 z-10 transition-all duration-75 ";
             }
         }
 
@@ -142,7 +142,7 @@ function VirtualKeyboard() {
 
 
     return (
-        <div className="max-w-5xl mx-auto mt-12 flex flex-col items-center gap-1 sm:gap-2 select-none opacity-40 dark:opacity-20 hover:opacity-100 transition-opacity duration-500">
+        <div className="max-w-5xl mx-auto mt-12 flex flex-col items-center gap-1 sm:gap-2 select-none opacity-40 dark:opacity-20 beige:opacity-30 hover:opacity-100 transition-opacity duration-500">
             {keyboardLayout.map((row, rowIndex) => (
                 <div key={rowIndex} className="flex flex-row justify-center gap-1 sm:gap-2 w-full">
                     {row.map((key) => (

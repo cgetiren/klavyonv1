@@ -42,14 +42,14 @@ function WordArea() {
                 data.map((val, actualIndex) => {
                     const isActive = actualIndex === nextWord;
                     const status = wordStatuses[actualIndex] || "default";
-                    let statusClass = "text-neutral-300 dark:text-neutral-700";
+                    let statusClass = "text-neutral-300 dark:text-neutral-700 retro:text-neutral-900 tokyo:text-[#1E293B]";
                     
                     if (isActive) {
-                        statusClass = "text-neutral-900 dark:text-neutral-100 font-bold";
+                        statusClass = "text-[var(--swiss-text)] font-bold";
                     } else if (status === "wrong") {
-                        statusClass = "text-red-600 dark:text-red-500 line-through opacity-60";
+                        statusClass = "text-red-600 dark:text-red-500 retro:text-red-400 tokyo:text-[#E879F9] line-through opacity-60";
                     } else if (status === "correct") {
-                        statusClass = "text-neutral-900 dark:text-neutral-100 opacity-40";
+                        statusClass = "text-[var(--swiss-text)] opacity-40";
                     }
 
                     return (
@@ -61,18 +61,18 @@ function WordArea() {
                             {isActive ? (
                                 // Aktif kelimeyi karakter karakter ayırarak render et
                                 val.split("").map((char, charIdx) => {
-                                    let charClass = "text-neutral-900 dark:text-neutral-100"; 
+                                    let charClass = "text-[var(--swiss-text)]"; 
                                     const isTyped = charIdx < actionWord.length;
                                     const isCurrent = charIdx === actionWord.length;
 
                                     if (isTyped) {
                                         if (actionWord[charIdx] === char) {
-                                            charClass = "text-neutral-900 dark:text-neutral-100"; 
+                                            charClass = "text-[var(--swiss-text)]"; 
                                         } else {
                                             charClass = "text-red-600 dark:text-red-500 bg-red-50 dark:bg-red-950/30"; 
                                         }
                                     } else if (isCurrent) {
-                                        charClass = "relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[3px] after:bg-neutral-900 dark:after:bg-neutral-100 after:cursor-blink";
+                                        charClass = "relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[3px] after:bg-[var(--swiss-text)] after:cursor-blink";
                                     }
 
                                     return (

@@ -8,18 +8,68 @@
 }
 
 @variant dark (&:where(.dark, .dark *));
+@variant retro (&:where(.retro, .retro *));
+@variant artdeco (&:where(.artdeco, .artdeco *));
 
 :root {
-  --swiss-bg: #FAFAFA;
-  --swiss-text: #171717;
-  --swiss-border: #E5E5E5; /* neutral-200 */
+  --swiss-bg: #F5F5F0; /* Soft Oatmeal / Muted Ivory */
+  --swiss-text: #3C3C3C; /* Soft Ink Grey */
+  --swiss-border: #E8E8E1;
 }
 
 :root.dark {
-  --swiss-bg: #121212;
-  --swiss-text: #F5F5F5;
-  --swiss-border: #262626; /* neutral-800 */
+  --swiss-bg: #1C1C1E; /* Midnight Charcoal */
+  --swiss-text: #D1D1D6;
+  --swiss-border: #2C2C2E;
 }
+
+:root.retro {
+  --swiss-bg: #000000; /* Deep Space Black */
+  --swiss-text: #00F3FF; /* Neon Cyan */
+  --swiss-border: #FF00E5; /* Neon Pink */
+}
+
+:root.artdeco {
+  --swiss-bg: #011627; /* Art Deco Deep Navy */
+  --swiss-text: #D4AF37; /* Metallic Gold */
+  --swiss-border: #B8860B; /* Darker Gold */
+}
+
+.artdeco body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(30deg, #011627 12%, transparent 12.5%, transparent 87%, #011627 87.5%, #011627),
+        linear-gradient(150deg, #011627 12%, transparent 12.5%, transparent 87%, #011627 87.5%, #011627),
+        linear-gradient(30deg, #011627 12%, transparent 12.5%, transparent 87%, #011627 87.5%, #011627),
+        linear-gradient(150deg, #011627 12%, transparent 12.5%, transparent 87%, #011627 87.5%, #011627),
+        linear-gradient(60deg, #022137 25%, transparent 25.5%, transparent 75%, #022137 75%, #022137), 
+        linear-gradient(60deg, #022137 25%, transparent 25.5%, transparent 75%, #022137 75%, #022137);
+    background-size: 80px 140px;
+    background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+    opacity: 0.15;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.retro body::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 9999;
+    pointer-events: none;
+    background-size: 100% 4px, 3px 100%;
+}
+
 
 body {
   font-family: 'Inter', sans-serif;

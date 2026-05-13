@@ -18,72 +18,122 @@ const Certificate = ({ wpm, accuracy, testMode }: CertificateProps) => {
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        // Canvas dimensions (Editorial Ratio)
-        canvas.width = 800;
-        canvas.height = 600;
+        // High DPI Support
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = 1000 * dpr;
+        canvas.height = 700 * dpr;
+        ctx.scale(dpr, dpr);
+
+        const width = 1000;
+        const height = 700;
 
         // Background
-        ctx.fillStyle = theme === 'dark' ? '#121212' : '#FFFFFF';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = theme === 'dark' ? '#0A0A0A' : '#FFFFFF';
+        ctx.fillRect(0, 0, width, height);
 
-        // Border (Swiss Style)
-        ctx.strokeStyle = theme === 'dark' ? '#F5F5F5' : '#171717';
-        ctx.lineWidth = 20;
-        ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
-
-        // Thin inner border
+        // Premium Grid Background (Subtle)
+        ctx.strokeStyle = theme === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)';
         ctx.lineWidth = 1;
-        ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
+        for(let i=0; i<width; i+=40) {
+            ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, height); ctx.stroke();
+        }
+        for(let i=0; i<height; i+=40) {
+            ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(width, i); ctx.stroke();
+        }
 
-        // Typography
-        const textColor = theme === 'dark' ? '#F5F5F5' : '#171717';
-        const secondaryColor = theme === 'dark' ? '#525252' : '#A3A3A3';
+        // Main Frame
+        ctx.strokeStyle = theme === 'dark' ? '#FFFFFF' : '#000000';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(40, 40, width - 80, height - 80);
 
-        // Title
-        ctx.fillStyle = textColor;
-        ctx.font = '900 42px Inter, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('TYPING PERFORMANCE', canvas.width / 2, 140);
-        
-        ctx.font = '400 14px Inter, sans-serif';
-        ctx.fillStyle = secondaryColor;
-        ctx.fillText('OFFICIAL CERTIFICATE OF COMPLETION', canvas.width / 2, 165);
+        // Colors
+        const primaryColor = theme === 'dark' ? '#FFFFFF' : '#000000';
+        const secondaryColor = theme === 'dark' ? '#A3A3A3' : '#737373';
+        const accentColor = '#DC2626'; // Swiss Red
 
-        // Main Stats
-        ctx.fillStyle = textColor;
-        ctx.font = '900 140px Inter, sans-serif';
-        ctx.fillText(wpm.toString(), canvas.width / 2, 340);
-        
-        ctx.font = '700 24px Inter, sans-serif';
-        ctx.fillText('WORDS PER MINUTE', canvas.width / 2, 380);
-
-        // Secondary Stats Grid
-        ctx.font = '900 32px Inter, sans-serif';
-        ctx.fillText(`${accuracy}%`, canvas.width / 2 - 100, 480);
-        ctx.font = '400 12px Inter, sans-serif';
-        ctx.fillStyle = secondaryColor;
-        ctx.fillText('ACCURACY', canvas.width / 2 - 100, 500);
-
-        ctx.fillStyle = textColor;
-        ctx.font = '900 32px Inter, sans-serif';
-        ctx.fillText(testMode.toUpperCase(), canvas.width / 2 + 100, 480);
-        ctx.font = '400 12px Inter, sans-serif';
-        ctx.fillStyle = secondaryColor;
-        ctx.fillText('TEST MODE', canvas.width / 2 + 100, 500);
-
-        // Date & Signature Area
-        const date = new Date().toLocaleDateString();
-        ctx.font = '700 14px Inter, sans-serif';
-        ctx.fillStyle = textColor;
+        // Header - Editorial Style
+        ctx.fillStyle = primaryColor;
+        ctx.font = '900 12px Inter';
         ctx.textAlign = 'left';
-        ctx.fillText(`DATE: ${date}`, 80, 550);
+        ctx.fillText('KLAVYON / PERFORMANCE PROTOCOL', 60, 75);
         
         ctx.textAlign = 'right';
-        ctx.fillText('KLAVYON V1 VERIFIED', canvas.width - 80, 550);
+        ctx.fillText('v1.0.0_STABLE', width - 60, 75);
 
-        // Swiss Red Accent
-        ctx.fillStyle = '#DC2626';
-        ctx.fillRect(canvas.width / 2 - 30, 80, 60, 10);
+        // Swiss Cross / Logo Minimal
+        ctx.fillStyle = accentColor;
+        ctx.fillRect(60, 110, 30, 8);
+        ctx.fillRect(71, 99, 8, 30);
+
+        // Main Title
+        ctx.fillStyle = primaryColor;
+        ctx.font = '900 82px Inter';
+        ctx.textAlign = 'left';
+        ctx.fillText('CERTIFICATE', 60, 200);
+        ctx.fillText('OF SPEED', 60, 280);
+
+        // Separator Line
+        ctx.strokeStyle = primaryColor;
+        ctx.lineWidth = 8;
+        ctx.beginPath();
+        ctx.moveTo(60, 320);
+        ctx.lineTo(260, 320);
+        ctx.stroke();
+
+        // The Data - WPM
+        ctx.font = '900 240px Inter';
+        ctx.textAlign = 'right';
+        ctx.fillText(wpm.toString(), width - 60, 340);
+        
+        ctx.font = '900 24px Inter';
+        ctx.fillText('WPM', width - 65, 370);
+
+        // Info Grid
+        ctx.textAlign = 'left';
+        
+        // Accuracy
+        ctx.font = '400 12px Inter';
+        ctx.fillStyle = secondaryColor;
+        ctx.fillText('PRECISION RATE', 60, 450);
+        ctx.font = '900 48px Inter';
+        ctx.fillStyle = primaryColor;
+        ctx.fillText(`${accuracy}%`, 60, 500);
+
+        // Test Mode
+        ctx.font = '400 12px Inter';
+        ctx.fillStyle = secondaryColor;
+        ctx.fillText('PROTOCOL MODE', 280, 450);
+        ctx.font = '900 48px Inter';
+        ctx.fillStyle = primaryColor;
+        ctx.fillText(testMode.toUpperCase(), 280, 500);
+
+        // Timestamp
+        const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        ctx.font = '400 12px Inter';
+        ctx.fillStyle = secondaryColor;
+        ctx.fillText('ISSUED ON', 540, 450);
+        ctx.font = '900 32px Inter';
+        ctx.fillStyle = primaryColor;
+        ctx.fillText(date.toUpperCase(), 540, 500);
+
+        // Footer Metadata
+        ctx.font = '400 10px Inter';
+        ctx.fillStyle = secondaryColor;
+        const metadata = `HASH: ${Math.random().toString(36).substring(2, 15).toUpperCase()} | AUTHENTICITY GUARANTEED BY KLAVYON ENGINE`;
+        ctx.fillText(metadata, 60, height - 60);
+
+        // Signature Line
+        ctx.strokeStyle = secondaryColor;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(width - 260, height - 90);
+        ctx.lineTo(width - 60, height - 90);
+        ctx.stroke();
+        
+        ctx.textAlign = 'right';
+        ctx.font = '900 12px Inter';
+        ctx.fillStyle = primaryColor;
+        ctx.fillText('SYSTEM VALIDATED', width - 60, height - 70);
 
     }, [wpm, accuracy, testMode, theme]);
 

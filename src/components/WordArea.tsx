@@ -36,40 +36,43 @@ function WordArea() {
         <div 
             ref={containerRef} 
             id="words" 
-            className="max-w-5xl overflow-hidden flex flex-wrap content-start gap-x-4 gap-y-3 p-2 mx-auto text-3xl font-bold h-[160px] relative transition-all duration-300"
+            className="max-w-5xl overflow-hidden flex flex-wrap content-start gap-x-6 gap-y-4 mx-auto text-4xl font-medium h-[180px] relative transition-all duration-300"
         >
             {
                 data.map((val, actualIndex) => {
                     const isActive = actualIndex === nextWord;
-                    let statusClass = wordStatuses[actualIndex] || "bg-white/5 text-gray-400";
+                    const status = wordStatuses[actualIndex] || "default";
+                    let statusClass = "text-neutral-300 dark:text-neutral-700";
                     
                     if (isActive) {
-                        statusClass = "border-b-4 border-blue-500 text-white shadow-lg bg-white/20 scale-105";
+                        statusClass = "text-neutral-900 dark:text-neutral-100 font-bold";
+                    } else if (status === "wrong") {
+                        statusClass = "text-red-600 dark:text-red-500 line-through opacity-60";
+                    } else if (status === "correct") {
+                        statusClass = "text-neutral-900 dark:text-neutral-100 opacity-40";
                     }
 
                     return (
                         <div 
                             id={"word-" + actualIndex} 
                             key={actualIndex} 
-                            className={`px-3 py-1 rounded-lg transition-all duration-200 select-none flex gap-[2px] ${statusClass}`}
+                            className={`transition-all duration-200 select-none flex gap-[1px] ${statusClass}`}
                         >
                             {isActive ? (
                                 // Aktif kelimeyi karakter karakter ayırarak render et
                                 val.split("").map((char, charIdx) => {
-                                    let charClass = "text-white"; // Varsayılan: Beyaz
+                                    let charClass = "text-neutral-900 dark:text-neutral-100"; 
                                     const isTyped = charIdx < actionWord.length;
                                     const isCurrent = charIdx === actionWord.length;
 
                                     if (isTyped) {
-                                        // Yazıldıysa kontrol et
                                         if (actionWord[charIdx] === char) {
-                                            charClass = "text-green-400"; // Doğru: Yeşil
+                                            charClass = "text-neutral-900 dark:text-neutral-100"; 
                                         } else {
-                                            charClass = "bg-red-500/80 text-white rounded px-[2px]"; // Yanlış: Koyu Kırmızı Vurgu
+                                            charClass = "text-red-600 dark:text-red-500 bg-red-50 dark:bg-red-950/30"; 
                                         }
                                     } else if (isCurrent) {
-                                        // Sıradaki harf ise imleç/vurgu etkisi
-                                        charClass = "bg-blue-500/40 border-b-2 border-white animate-pulse rounded-t-sm";
+                                        charClass = "relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[3px] after:bg-neutral-900 dark:after:bg-neutral-100 after:cursor-blink";
                                     }
 
                                     return (
@@ -79,7 +82,7 @@ function WordArea() {
                                     );
                                 })
                             ) : (
-                                // Aktif olmayan kelimeler blok halinde render edilir
+                                // Aktif olmayan kelimeler
                                 val 
                             )}
                         </div>

@@ -22,7 +22,8 @@ interface dataType {
     timeRemaining: number | null,
     wordStatuses: Record<number, string>,
     keystrokeRecord: Array<{ key: string, timeOffset: number, isCorrect: boolean }>,
-    isReplaying: boolean
+    isReplaying: boolean,
+    theme: 'light' | 'dark'
 }
 
 const initialState: dataType = {
@@ -44,13 +45,17 @@ const initialState: dataType = {
     timeRemaining: 60,
     wordStatuses: {},
     keystrokeRecord: [],
-    isReplaying: false
+    isReplaying: false,
+    theme: 'light'
 }
 
 export const WordSlice = createSlice({
     name: 'WordSlice',
     initialState,
     reducers: {
+        toggleTheme(state: dataType): void {
+            state.theme = state.theme === 'light' ? 'dark' : 'light';
+        },
         getWords(state: dataType): void {
             const shuffled = [...data.kelimeler].sort(() => 0.5 - Math.random());
             const expandedList: string[] = [];
@@ -115,29 +120,27 @@ export const WordSlice = createSlice({
         stopReplay(state: dataType): void {
             state.isReplaying = false;
         },
-        checkWord(state: dataType, action: PayloadAction<string>): void { /* Yazı renklerinin belirlendiği fonksiyon */
-            state.stateWord = state.dataWords[state.nextword];
+        checkWord(state: dataType, action: PayloadAction<string>): void {
+            const currentTarget = state.dataWords[state.nextword];
             const newVal = action.payload;
             const oldVal = state.actionWord;
 
             if (state.isStarted && !state.isComplete) {
+                // Sadece yeni eklenen karakterleri say
                 if (newVal.length > oldVal.length) {
-                    // Kullanıcı yeni harf(ler) ekledi
                     const addedStr = newVal.substring(oldVal.length);
                     for(let i=0; i < addedStr.length; i++) {
                         state.totalKeystrokes += 1;
                         const typedChar = addedStr[i];
-                        const expectedChar = state.stateWord ? state.stateWord[oldVal.length + i] : undefined;
+                        const expectedChar = currentTarget ? currentTarget[oldVal.length + i] : undefined;
                         
                         const isCharCorrect = (typedChar === expectedChar);
-                        
                         if (isCharCorrect) {
                             state.correctKeystrokes += 1;
                         } else {
                             state.incorrectKeystrokes += 1;
                         }
 
-                        // Yazılan harfin doğru olup olmadığını en son tuş vuruşu kaydına (Replay için) yansıt
                         if (state.keystrokeRecord.length > 0) {
                             state.keystrokeRecord[state.keystrokeRecord.length - 1].isCorrect = isCharCorrect;
                         }
@@ -147,48 +150,37 @@ export const WordSlice = createSlice({
 
             state.actionWord = newVal;
 
-            let color = "";
-            if (state.actionWord == state.stateWord) {
-                color = "bg-green-600 text-white";
-            }
-            else if (state.actionWord.length <= state.stateWord.length) {
-                let momentaryValue = "";
-                for (let i = 0; i < action.payload.length; i++) {
-                    momentaryValue += state.dataWords[state.nextword][i];
-                    if (action.payload != momentaryValue) {
-                        color = "bg-red-600 text-white";
-                    }
-                    else if (action.payload == momentaryValue) {
-                        color = "bg-gray-500 text-white";
-                    }
-                }
-                if (action.payload == "") {
-                    color = "bg-gray-700 text-white"; // default
+            let status = "default";
+            if (state.actionWord === currentTarget) {
+                status = "correct";
+            } else if (state.actionWord.length > 0) {
+                if (!currentTarget?.startsWith(state.actionWord)) {
+                    status = "wrong";
                 }
             }
-
-            state.wordStatuses[state.nextword] = color;
+            state.wordStatuses[state.nextword] = status;
         },
-        calculateResult(state: dataType) { /* Doğru ve Yanlışların hesaplandığı fonksiyon */
+        calculateResult(state: dataType) {
             if(state.pendingWord <= 0 && state.dataWords.length > 0)
                 return;            
 
-            if (state.actionWord == state.stateWord) {
+            const currentTarget = state.dataWords[state.nextword];
+
+            if (state.actionWord === currentTarget) {
                 state.correctWord += 1;
-                state.pendingWord -= 1;
-                state.wordStatuses[state.nextword] = "bg-green-600 text-white";
+                state.wordStatuses[state.nextword] = "correct";
             }
-            else if (state.actionWord != state.stateWord) {
+            else {
                 state.rejectWord += 1;
-                state.pendingWord -= 1;
-                state.wordStatuses[state.nextword] = "bg-red-600 text-white line-through";
+                state.wordStatuses[state.nextword] = "wrong";
             }
             
+            state.pendingWord -= 1;
             if (state.pendingWord < 1) {
                 state.isComplete = true;
             }
             state.nextword += 1;
-            state.actionWord = ""; // Kelime bittiğinde girişi temizle (Controlled Component için kritik)
+            state.actionWord = ""; 
         },
         resetToTest(state: dataType) {
             state.nextword = 0;
@@ -213,13 +205,25 @@ export const WordSlice = createSlice({
             else state.timeRemaining = null;
         },
         finishTest(state: dataType) {
-            state.isComplete = true;
-            state.isStarted = false;
+            if (!state.isComplete && state.isStarted) {
+                if (state.actionWord.trim() !== "") {
+                    const currentTarget = state.dataWords[state.nextword];
+                    if (state.actionWord === currentTarget) {
+                        state.correctWord += 1;
+                        state.wordStatuses[state.nextword] = "correct";
+                    } else {
+                        state.rejectWord += 1;
+                        state.wordStatuses[state.nextword] = "wrong";
+                    }
+                }
+                state.isComplete = true;
+                state.isStarted = false;
+            }
         }
     },
 })
 
-export const { getWords, setTestMode, startTest, tickTime, incrementKeystroke, recordKey, startReplay, stopReplay, checkWord, calculateResult, resetToTest, finishTest } = WordSlice.actions
+export const { getWords, setTestMode, startTest, tickTime, incrementKeystroke, recordKey, startReplay, stopReplay, checkWord, calculateResult, resetToTest, finishTest, toggleTheme } = WordSlice.actions
 
 // Vite HMR cache invalidation
 export default WordSlice.reducer

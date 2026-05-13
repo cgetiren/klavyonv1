@@ -1,11 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --color-swiss-bg: #FAFAFA;
+  --color-swiss-text: #171717;
+}
+
+@variant dark (&:where(.dark, .dark *));
+
+:root {
+  --swiss-bg: #FAFAFA;
+  --swiss-text: #171717;
+  --swiss-border: #E5E5E5; /* neutral-200 */
+}
+
+:root.dark {
+  --swiss-bg: #121212;
+  --swiss-text: #F5F5F5;
+  --swiss-border: #262626; /* neutral-800 */
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--swiss-bg);
+  color: var(--swiss-text);
+  transition: background-color 0.5s, color 0.5s;
+  margin: 0;
+}
 
 @keyframes InformationAnimate{
     from{
         opacity: 0;
+        transform: translateY(10px);
     }
-
     to{
         opacity: 1;
+        transform: translateY(0);
     }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.cursor-blink {
+    animation: blink 1s step-end infinite;
 }

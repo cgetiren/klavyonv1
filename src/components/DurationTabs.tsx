@@ -13,17 +13,17 @@ function DurationTabs() {
     };
 
     const getBtnClass = (mode: string) => {
-        let base = "px-6 py-2 text-sm font-bold tracking-wider uppercase rounded-t-xl transition-all duration-300 ";
+        let base = "px-4 py-3 text-xs sm:text-sm font-bold tracking-[0.2em] uppercase transition-colors duration-200 border-b-2 ";
         if (testMode === mode) {
-            base += "bg-blue-600/80 text-white shadow-[0_-4px_10px_rgba(37,99,235,0.3)]";
+            base += "border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100";
         } else {
-            base += "bg-white/5 text-gray-400 hover:text-white hover:bg-white/10";
+            base += "border-transparent text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100";
         }
         return base;
     };
 
     return (
-        <div className="max-w-300 mx-auto flex justify-center gap-1 mb-0 border-b border-white/10 pb-0 backdrop-blur-sm">
+        <div className="max-w-5xl w-full mx-auto flex justify-start gap-6 mb-8 border-b border-neutral-200 dark:border-neutral-800">
             <button 
                 onClick={() => handleModeChange('1min')}
                 className={getBtnClass('1min')}
@@ -40,7 +40,7 @@ function DurationTabs() {
                 onClick={() => handleModeChange('infinite')}
                 className={getBtnClass('infinite')}
             >
-                ∞
+                ∞ INFINITE
             </button>
         </div>
     );

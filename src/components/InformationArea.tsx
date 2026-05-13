@@ -14,10 +14,11 @@ function InformationArea() {
     const correctKeystrokes = useSelector((state: RootState) => state.words.correctKeystrokes);
     const totalKeystrokes = useSelector((state: RootState) => state.words.totalKeystrokes);
 
-    const minutes = elapsedTime > 0 ? elapsedTime / 60 : 1;
-    const wpm = Math.max(0, Math.floor((totalKeystrokes / 5) / minutes));
+    const minutes = elapsedTime > 0 ? elapsedTime / 60 : 1/60;
+    const wpm = Math.max(0, Math.floor((correctKeystrokes / 5) / minutes));
     const kpm = Math.max(0, Math.floor(totalKeystrokes / minutes));
     const accuracy = totalKeystrokes > 0 ? Math.floor((correctKeystrokes / totalKeystrokes) * 100) : 100;
+    const totalWordsAttempted = correctCount + rejectCount;
 
     let titleText = "Sonuç";
     if (testMode === '1min') titleText = "1 Dakikalık Test Sonucu";
@@ -25,65 +26,59 @@ function InformationArea() {
     else titleText = "Süresiz Test Sonucu";
 
     return (
-        <div className="max-w-300 mx-auto w-full my-4">
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 flex flex-col items-center justify-center text-white p-10 rounded-3xl shadow-2xl animate-[InformationAnimate_1s]">
-                <h1 className="text-4xl pb-6 font-black tracking-tight text-blue-400">{titleText}</h1>
-                <div className="px-4 text-center mt-2 flex flex-wrap justify-center gap-10">
-                    <div className="flex flex-col items-center">
-                        <span className="text-gray-400 text-sm font-bold uppercase tracking-tighter">Hız (WPM)</span>
-                        <span className="text-5xl font-black text-green-400">{wpm}</span>
-                    </div>
-                    <div className="flex flex-col items-center">
-                        <span className="text-gray-400 text-sm font-bold uppercase tracking-tighter">Doğruluk</span>
-                        <span className="text-5xl font-black text-yellow-400">%{accuracy}</span>
-                    </div>
-                    <div className="flex flex-col items-center">
-                        <span className="text-gray-400 text-sm font-bold uppercase tracking-tighter">Doğru</span>
-                        <span className="text-5xl font-black text-green-500">{correctCount}</span>
-                    </div>
-                    <div className="flex flex-col items-center">
-                        <span className="text-gray-400 text-sm font-bold uppercase tracking-tighter">Yanlış Kelime</span>
-                        <span className="text-5xl font-black text-red-500">{rejectCount}</span>
-                    </div>
-                </div>
-                
-                {/* İkinci Satır İstatistikler (Tuş Vuruşları) */}
-                <div className="px-4 text-center mt-8 flex flex-wrap justify-center gap-10">
-                    <div className="flex flex-col items-center">
-                        <span className="text-gray-400 text-sm font-bold uppercase tracking-tighter">Tuş / Dakika (KPM)</span>
-                        <span className="text-4xl font-black text-purple-400">{kpm}</span>
-                    </div>
-                    <div className="flex flex-col items-center">
-                        <span className="text-gray-400 text-sm font-bold uppercase tracking-tighter">Doğru Tuş</span>
-                        <span className="text-4xl font-black text-green-500">{correctKeystrokes}</span>
-                    </div>
-                    <div className="flex flex-col items-center">
-                        <span className="text-gray-400 text-sm font-bold uppercase tracking-tighter">Toplam Tuş</span>
-                        <span className="text-4xl font-black text-blue-300">{totalKeystrokes}</span>
+        <div className="max-w-5xl mx-auto w-full my-12 animate-[InformationAnimate_0.6s_ease-out]">
+            <div className="flex flex-col md:flex-row justify-between items-start gap-12 border-b border-neutral-200 dark:border-neutral-800 pb-12">
+                <div className="flex flex-col">
+                    <h1 className="text-xs font-black tracking-[0.3em] uppercase text-neutral-400 dark:text-neutral-500 mb-4">{titleText}</h1>
+                    <div className="flex items-baseline gap-4">
+                        <span className="text-[12rem] font-black leading-none tracking-tighter text-neutral-900 dark:text-neutral-100">{wpm}</span>
+                        <span className="text-2xl font-black text-neutral-400 dark:text-neutral-500 uppercase tracking-widest">WPM</span>
                     </div>
                 </div>
 
-                <div className="flex gap-4 mt-10">
-                    <button 
-                        onClick={() => dispatch(resetToTest())} 
-                        className="bg-white/10 border border-white/20 rounded-2xl px-10 py-4 cursor-pointer hover:bg-white hover:text-[#001529] transition-all duration-300 font-black uppercase tracking-widest text-sm shadow-xl" 
-                        type="button"
-                    >
-                        Tekrar Dene
-                    </button>
-                    <button 
-                        onClick={() => dispatch(startReplay())} 
-                        disabled={isReplaying}
-                        className={`border rounded-2xl px-10 py-4 font-black uppercase tracking-widest text-sm shadow-xl transition-all duration-300 ${isReplaying ? 'bg-purple-500/50 text-white cursor-not-allowed border-purple-400/50 animate-pulse' : 'bg-purple-600/20 text-purple-300 border-purple-500/30 cursor-pointer hover:bg-purple-500 hover:text-white'}`} 
-                        type="button"
-                    >
-                        {isReplaying ? "İzleniyor..." : "Tekrarı İzle (20sn)"}
-                    </button>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-x-16 gap-y-8 mt-4">
+                    <div className="flex flex-col">
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-1">TOTAL WORDS</span>
+                        <span className="text-4xl font-black text-neutral-900 dark:text-neutral-100">{totalWordsAttempted}</span>
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-1">CORRECT</span>
+                        <span className="text-4xl font-black text-neutral-900 dark:text-neutral-100">{correctCount}</span>
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-1">INCORRECT</span>
+                        <span className="text-4xl font-black text-red-600 dark:text-red-500">{rejectCount}</span>
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-1">ACCURACY</span>
+                        <span className="text-4xl font-black text-neutral-900 dark:text-neutral-100">{accuracy}%</span>
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-1">KPM (KEYS)</span>
+                        <span className="text-4xl font-black text-neutral-900 dark:text-neutral-100">{kpm}</span>
+                    </div>
                 </div>
             </div>
+
+            <div className="flex flex-col md:flex-row gap-6 mt-12 items-center">
+                <button 
+                    onClick={() => dispatch(resetToTest())} 
+                    className="w-full md:w-auto bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black px-12 py-5 hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-all duration-200 font-black uppercase tracking-widest text-sm" 
+                    type="button"
+                >
+                    Try Again
+                </button>
+                <button 
+                    onClick={() => dispatch(startReplay())} 
+                    disabled={isReplaying}
+                    className={`w-full md:w-auto border-2 px-12 py-5 font-black uppercase tracking-widest text-sm transition-all duration-200 ${isReplaying ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 dark:text-neutral-500 border-neutral-100 dark:border-neutral-800 cursor-not-allowed' : 'border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-900 dark:hover:bg-neutral-100 hover:text-white dark:hover:text-black'}`} 
+                    type="button"
+                >
+                    {isReplaying ? "Watching..." : "Watch Replay"}
+                </button>
+            </div>
             
-            {/* Sanal Klavye Sonuç Ekranı Açıkken Burada Gözükür */}
-            <div className={`mt-8 ${isReplaying ? 'opacity-100 scale-100' : 'opacity-80 scale-95'} transition-all duration-500`}>
+            <div className={`mt-16 transition-all duration-700 ${isReplaying ? 'opacity-100 translate-y-0' : 'opacity-20 translate-y-4'}`}>
                 <VirtualKeyboard />
             </div>
 
@@ -91,5 +86,4 @@ function InformationArea() {
     )
 }
 
-// Vite HMR cache invalidation
 export default InformationArea;

@@ -26,18 +26,18 @@ function InputArea() {
     }
 
     return (
-        <div className="max-w-300 mx-auto">
+        <div className="max-w-5xl mx-auto">
             <input 
                 value={actionWord}
                 onKeyDown={(e) => GetKey(e)} 
                 onChange={(e) => changeInput(e)} 
-                className="w-full border border-white/10 bg-white/5 backdrop-blur-md text-white focus:outline-none focus:border-blue-500/50 rounded-xl mt-4 px-4 py-3 font-bold text-2xl tracking-wider shadow-xl placeholder-white/20 transition-all duration-300" 
+                className="w-full border-b-2 border-neutral-200 dark:border-neutral-800 bg-transparent text-neutral-900 dark:text-neutral-100 focus:outline-none focus:border-neutral-900 dark:focus:border-neutral-100 mt-8 px-0 py-6 font-bold text-5xl tracking-tight transition-all duration-300 placeholder-neutral-200 dark:placeholder-neutral-800" 
                 autoFocus 
                 type="text" 
-                placeholder="Kelime Gir..." 
+                placeholder="Start typing..." 
             />
         </div>
     )
 }
 
-export default InputArea;
+    export default InputArea;

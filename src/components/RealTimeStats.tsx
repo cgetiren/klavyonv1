@@ -24,8 +24,9 @@ function RealTimeStats() {
     }, [isStarted, isComplete, dispatch]);
 
     const calculateWPM = () => {
-        const minutes = elapsedTime > 0 ? elapsedTime / 60 : 1;
-        const wpm = (totalKeystrokes / 5) / minutes;
+        const minutes = elapsedTime > 0 ? elapsedTime / 60 : 1/60; // 1 saniyeden azsa 1 saniye say
+        // Standart WPM formülü: (Doğru Karakter Sayısı / 5) / Dakika
+        const wpm = (correctKeystrokes / 5) / minutes;
         return Math.max(0, Math.floor(wpm));
     };
 
@@ -36,36 +37,35 @@ function RealTimeStats() {
     };
 
     return (
-        <div className="max-w-300 mx-auto flex justify-between items-center text-white p-6 mb-4 bg-white/5 backdrop-blur-md border-x border-b border-white/10 rounded-b-2xl shadow-2xl">
-            <div className="flex flex-col items-center">
-                <span className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-1">
-                    {testMode === 'infinite' ? 'Geçen Süre' : 'Kalan Süre'}
-                </span>
-                <span className="text-4xl font-black tabular-nums">
-                    {testMode === 'infinite' ? elapsedTime : timeRemaining}<span className="text-lg font-normal ml-1">sn</span>
-                </span>
-            </div>
-            <div className="h-10 w-px bg-white/10"></div>
-            <div className="flex flex-col items-center">
-                <span className="text-xs font-bold uppercase tracking-widest text-green-400 mb-1">Hız (WPM)</span>
-                <span className="text-4xl font-black tabular-nums">{calculateWPM()}</span>
-            </div>
-            <div className="h-10 w-px bg-white/10"></div>
-            <div className="flex flex-col items-center relative">
-                <span className="text-xs font-bold uppercase tracking-widest text-yellow-400 mb-1">Doğruluk</span>
-                <span className="text-4xl font-black tabular-nums">%{calculateAccuracy()}</span>
+        <div className="max-w-5xl w-full mx-auto flex justify-between items-end text-neutral-900 dark:text-neutral-100 pb-8 mb-8 border-b border-neutral-200 dark:border-neutral-800">
+            <div className="flex gap-12 items-end">
+                <div className="flex flex-col">
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-2">
+                        {testMode === 'infinite' ? 'ELAPSED' : 'REMAINING'}
+                    </span>
+                    <span className="text-5xl font-black tabular-nums leading-none">
+                        {testMode === 'infinite' ? elapsedTime : timeRemaining}<span className="text-sm font-bold ml-1 text-neutral-400 dark:text-neutral-500">s</span>
+                    </span>
+                </div>
+                
+                <div className="flex flex-col">
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-2">WPM</span>
+                    <span className="text-5xl font-black tabular-nums leading-none">{calculateWPM()}</span>
+                </div>
+
+                <div className="flex flex-col">
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-2">ACCURACY</span>
+                    <span className="text-5xl font-black tabular-nums leading-none">{calculateAccuracy()}<span className="text-sm font-bold text-neutral-400 dark:text-neutral-500">%</span></span>
+                </div>
             </div>
 
             {testMode === 'infinite' && isStarted && !isComplete && (
-                <>
-                    <div className="h-10 w-px bg-white/10"></div>
-                    <button 
-                        onClick={() => dispatch(finishTest())}
-                        className="bg-red-500/20 hover:bg-red-500 text-red-500 hover:text-white border border-red-500/30 px-6 py-2 rounded-xl font-bold transition-all duration-300 text-sm uppercase tracking-wider shadow-[0_0_15px_rgba(239,68,68,0.2)] hover:shadow-[0_0_20px_rgba(239,68,68,0.4)]"
-                    >
-                        Testi Bitir
-                    </button>
-                </>
+                <button 
+                    onClick={() => dispatch(finishTest())}
+                    className="border-2 border-neutral-900 dark:border-neutral-100 hover:bg-neutral-900 dark:hover:bg-neutral-100 hover:text-white dark:hover:text-black px-8 py-3 font-black transition-all duration-200 text-xs uppercase tracking-widest"
+                >
+                    Finish Test
+                </button>
             )}
         </div>
     );

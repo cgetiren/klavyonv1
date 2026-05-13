@@ -108,18 +108,18 @@ function VirtualKeyboard() {
     }, [isReplaying, keystrokeRecord, elapsedTime, dispatch]);
 
     const getKeyStyle = (key: string) => {
-        let baseStyle = "flex items-center justify-center rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm text-white shadow-lg font-bold uppercase transition-all duration-200 ";
+        let baseStyle = "flex items-center justify-center border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 font-bold uppercase transition-all duration-100 ";
         
-        let widthStr = "w-10 h-10 sm:w-14 sm:h-14 text-sm sm:text-xl"; // Biraz daha büyük ve ferah tuşlar
+        let widthStr = "w-10 h-10 sm:w-16 sm:h-16 text-sm sm:text-lg"; 
         
         if (key === 'tab' || key === 'enter' || key === 'capslock' || key === 'shift' || key === 'şhift') {
-            widthStr = "w-16 sm:w-24 px-2 h-10 sm:h-14 text-xs sm:text-sm";
+            widthStr = "w-16 sm:w-28 px-2 h-10 sm:h-16 text-xs sm:text-xs";
         }
         if (key === 'backspace') {
-            widthStr = "w-20 sm:w-28 px-2 h-10 sm:h-14 text-xs sm:text-sm";
+            widthStr = "w-20 sm:w-32 px-2 h-10 sm:h-16 text-xs sm:text-xs";
         }
         if (key === 'space') {
-            widthStr = "w-96 sm:w-[600px] h-10 sm:h-14";
+            widthStr = "w-96 sm:w-[680px] h-10 sm:h-16";
         }
 
         const activeInfo = activeKeys[key] || (key === 'şhift' ? activeKeys['shift'] : null);
@@ -128,16 +128,13 @@ function VirtualKeyboard() {
         if (isActive) {
             if (isReplaying) {
                 if (activeInfo.isCorrect) {
-                    baseStyle = "flex items-center justify-center rounded-xl border border-green-400 bg-green-500/80 text-white shadow-[0_0_25px_rgba(34,197,94,0.8)] scale-90 z-10 transition-all duration-75 ";
+                    baseStyle = "flex items-center justify-center bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black scale-95 z-10 transition-all duration-75 ";
                 } else {
-                    baseStyle = "flex items-center justify-center rounded-xl border border-red-400 bg-red-500/80 text-white shadow-[0_0_25px_rgba(239,68,68,0.8)] scale-90 z-10 transition-all duration-75 ";
+                    baseStyle = "flex items-center justify-center bg-red-600 dark:bg-red-500 text-white scale-95 z-10 transition-all duration-75 ";
                 }
             } else {
-                baseStyle = "flex items-center justify-center rounded-xl border border-blue-400 bg-blue-500/80 text-white shadow-[0_0_25px_rgba(59,130,246,0.8)] scale-90 z-10 transition-all duration-75 ";
+                baseStyle = "flex items-center justify-center bg-neutral-200 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 scale-95 z-10 transition-all duration-75 ";
             }
-        } else {
-            // Aktif değilken solarak kaybolması için transition ekliyoruz (özellikle hatalar için)
-            baseStyle += " transition-all duration-1000 ease-out ";
         }
 
         return baseStyle + widthStr;
@@ -145,7 +142,7 @@ function VirtualKeyboard() {
 
 
     return (
-        <div className="max-w-4xl mx-auto mt-8 flex flex-col items-center gap-2 select-none">
+        <div className="max-w-5xl mx-auto mt-12 flex flex-col items-center gap-1 sm:gap-2 select-none opacity-40 dark:opacity-20 hover:opacity-100 transition-opacity duration-500">
             {keyboardLayout.map((row, rowIndex) => (
                 <div key={rowIndex} className="flex flex-row justify-center gap-1 sm:gap-2 w-full">
                     {row.map((key) => (
@@ -159,5 +156,4 @@ function VirtualKeyboard() {
     );
 }
 
-// Vite HMR cache invalidation
 export default VirtualKeyboard;

@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import { resetToTest, startReplay } from "../store/WordSlice";
 import VirtualKeyboard from "./VirtualKeyboard";
+import Certificate from "./Certificate";
 
 function InformationArea() {
 
@@ -27,6 +28,7 @@ function InformationArea() {
 
     return (
         <div className="max-w-5xl mx-auto w-full my-12 animate-[InformationAnimate_0.6s_ease-out]">
+            <Certificate wpm={wpm} accuracy={accuracy} testMode={testMode} />
             <div className="flex flex-col md:flex-row justify-between items-start gap-12 border-b border-neutral-200 dark:border-neutral-800 pb-12">
                 <div className="flex flex-col">
                     <h1 className="text-xs font-black tracking-[0.3em] uppercase text-neutral-400 dark:text-neutral-500 mb-4">{titleText}</h1>

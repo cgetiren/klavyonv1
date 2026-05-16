@@ -48,7 +48,7 @@ const Certificate = ({ wpm, accuracy, testMode }: CertificateProps) => {
 
         if (theme === 'artdeco') {
             // Art Deco Background
-            ctx.fillStyle = '#011627';
+            ctx.fillStyle = '#000000';
             ctx.fillRect(0, 0, width, height);
 
             // Gold Geometric Frame
@@ -185,13 +185,13 @@ const Certificate = ({ wpm, accuracy, testMode }: CertificateProps) => {
                 />
                 <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 dark:group-hover:bg-white/5 transition-colors pointer-events-none" />
                 <div className="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className={`${theme === 'artdeco' ? 'bg-[#D4AF37] text-[#011627] rounded-none' : 'bg-black/80 text-white rounded-full backdrop-blur-md'} px-4 py-2 text-[10px] font-bold uppercase tracking-wider`}>
+                    <div className={`${theme === 'artdeco' ? 'bg-[#D4AF37] text-[#000000] rounded-none' : 'bg-black/80 text-white rounded-full backdrop-blur-md'} px-4 py-2 text-[10px] font-bold uppercase tracking-wider`}>
                         Save to Photos
                     </div>
                 </div>
             </div>
             
-            <div className={`flex items-center gap-2 px-3 py-1 ${theme === 'artdeco' ? 'bg-[#011627] border border-[#D4AF37] rounded-none' : 'bg-white/50 backdrop-blur-md rounded-full border border-neutral-200/50'} shadow-sm`}>
+            <div className={`flex items-center gap-2 px-3 py-1 ${theme === 'artdeco' ? 'bg-[#000000] border border-[#D4AF37] rounded-none' : 'bg-white/50 backdrop-blur-md rounded-full border border-neutral-200/50'} shadow-sm`}>
                 <div className={`w-2 h-2 rounded-full ${theme === 'artdeco' ? 'bg-[#D4AF37]' : 'bg-green-500'} animate-pulse`} />
                 <span className={`text-[10px] font-bold uppercase tracking-widest ${theme === 'artdeco' ? 'text-[#D4AF37]' : 'text-neutral-500'}`}>
                     Live Score Card

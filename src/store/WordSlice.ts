@@ -46,7 +46,7 @@ const initialState: dataType = {
     wordStatuses: {},
     keystrokeRecord: [],
     isReplaying: false,
-    theme: 'light'
+    theme: 'artdeco'
 }
 
 export const WordSlice = createSlice({

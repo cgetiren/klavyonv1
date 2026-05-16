@@ -36,13 +36,13 @@ function WordArea() {
         <div 
             ref={containerRef} 
             id="words" 
-            className="max-w-5xl overflow-hidden flex flex-wrap content-start gap-x-6 gap-y-4 mx-auto text-4xl font-medium h-[180px] relative transition-all duration-300"
+            className="max-w-5xl overflow-hidden flex flex-wrap content-start gap-x-6 gap-y-4 mx-auto text-4xl font-medium h-[140px] relative transition-all duration-300"
         >
             {
                 data.map((val, actualIndex) => {
                     const isActive = actualIndex === nextWord;
                     const status = wordStatuses[actualIndex] || "default";
-                    let statusClass = "text-neutral-300 dark:text-neutral-700 retro:text-neutral-900 tokyo:text-[#1E293B]";
+                    let statusClass = "text-neutral-300 dark:text-neutral-700 retro:text-neutral-700 tokyo:text-[#1E293B]";
                     
                     if (isActive) {
                         statusClass = "text-[var(--swiss-text)] font-bold";

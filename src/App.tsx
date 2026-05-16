@@ -60,13 +60,14 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="min-h-screen font-sans flex flex-col justify-center py-10 px-4 md:px-8 selection:bg-neutral-900 dark:selection:bg-neutral-100 retro:selection:bg-[#00F3FF] artdeco:selection:bg-[#D4AF37] selection:text-white dark:selection:text-black retro:selection:text-black artdeco:selection:text-[#011627] transition-colors duration-500">
+    <div className="min-h-screen font-sans flex flex-col justify-start py-8 px-4 md:px-8 selection:bg-neutral-900 dark:selection:bg-neutral-100 retro:selection:bg-[#00F3FF] artdeco:selection:bg-[#D4AF37] selection:text-white dark:selection:text-black retro:selection:text-black artdeco:selection:text-[#011627] transition-colors duration-500">
       
-      <div className="max-w-5xl w-full mx-auto flex justify-end mb-4">
+      {/* Theme Toggle - Positioned to the left of where the certificate appears */}
+      <div className="fixed top-6 right-72 md:right-96 z-50">
         <button 
           onClick={() => dispatch(toggleTheme())}
-          className="p-3 rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-800 retro:hover:bg-neutral-900 artdeco:hover:bg-[#022137] transition-all duration-300 shadow-sm"
-          title={`Switch to ${theme === 'light' ? 'Dark' : theme === 'dark' ? 'Retro' : theme === 'retro' ? 'Art Deco' : 'Light'} Theme`}
+          className="p-3 rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-800 retro:hover:bg-neutral-900 artdeco:hover:bg-[#022137] transition-all duration-300 shadow-sm bg-[var(--swiss-bg)]/80 backdrop-blur-md border border-[var(--swiss-border)]"
+          title={`Switch Theme`}
         >
           {theme === 'light' ? (
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-orange-500"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
@@ -80,27 +81,27 @@ function App() {
         </button>
       </div>
 
-        <DurationTabs />
-        <RealTimeStats />
-        
-        {
-          isComplete ? (
-            <InformationArea />
-          ) : null
-        }
-        
-        <div className={isComplete ? "opacity-30 pointer-events-none mt-8 max-w-5xl mx-auto w-full transition-opacity duration-500" : "mt-8 max-w-5xl mx-auto w-full"}>
-          <WordArea />
-          <InputArea />
-        </div>
-
-        {!isComplete && (
-          <div className="mt-12 w-full max-w-5xl mx-auto">
-             <VirtualKeyboard />
-          </div>
-        )}
-
+      <DurationTabs />
+      <RealTimeStats />
+      
+      {
+        isComplete ? (
+          <div className="my-2"><InformationArea /></div>
+        ) : null
+      }
+      
+      <div className={isComplete ? "opacity-20 pointer-events-none mt-12 max-w-5xl mx-auto w-full transition-opacity duration-500" : "mt-12 max-w-5xl mx-auto w-full"}>
+        <WordArea />
+        <InputArea />
       </div>
+
+      {!isComplete && (
+        <div className="mt-12 w-full max-w-5xl mx-auto">
+           <VirtualKeyboard />
+        </div>
+      )}
+
+    </div>
   )
 }
 

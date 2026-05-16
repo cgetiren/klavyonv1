@@ -23,7 +23,7 @@ function DurationTabs() {
     };
 
     return (
-        <div className="max-w-5xl w-full mx-auto flex justify-start gap-6 mb-8 border-b border-neutral-200 dark:border-neutral-800">
+        <div className="max-w-5xl w-full mx-auto flex justify-start gap-6 mb-2 border-b border-[var(--swiss-border)]">
             <button 
                 onClick={() => handleModeChange('1min')}
                 className={getBtnClass('1min')}

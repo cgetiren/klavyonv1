@@ -1,10 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Playfair+Display:wght@400;700;900&display=swap');
 @import "tailwindcss";
 
-@theme {
+:root {
   --font-sans: "Inter", sans-serif;
-  --color-swiss-bg: #FAFAFA;
-  --color-swiss-text: #171717;
+  --font-serif: "Playfair Display", serif;
 }
 
 @variant dark (&:where(.dark, .dark *));
@@ -15,24 +14,28 @@
   --swiss-bg: #F5F5F0; /* Soft Oatmeal / Muted Ivory */
   --swiss-text: #3C3C3C; /* Soft Ink Grey */
   --swiss-border: #E8E8E1;
+  --swiss-font: "Inter", sans-serif;
 }
 
 :root.dark {
   --swiss-bg: #1C1C1E; /* Midnight Charcoal */
   --swiss-text: #D1D1D6;
   --swiss-border: #2C2C2E;
+  --swiss-font: "Inter", sans-serif;
 }
 
 :root.retro {
   --swiss-bg: #000000; /* Deep Space Black */
   --swiss-text: #00F3FF; /* Neon Cyan */
   --swiss-border: #FF00E5; /* Neon Pink */
+  --swiss-font: "Inter", sans-serif;
 }
 
 :root.artdeco {
-  --swiss-bg: #011627; /* Art Deco Deep Navy */
+  --swiss-bg: #000000; /* Art Deco Deep Navy */
   --swiss-text: #D4AF37; /* Metallic Gold */
   --swiss-border: #B8860B; /* Darker Gold */
+  --swiss-font: "Playfair Display", serif;
 }
 
 .artdeco body::before {
@@ -43,10 +46,10 @@
     width: 100%;
     height: 100%;
     background-image: 
-        linear-gradient(30deg, #011627 12%, transparent 12.5%, transparent 87%, #011627 87.5%, #011627),
-        linear-gradient(150deg, #011627 12%, transparent 12.5%, transparent 87%, #011627 87.5%, #011627),
-        linear-gradient(30deg, #011627 12%, transparent 12.5%, transparent 87%, #011627 87.5%, #011627),
-        linear-gradient(150deg, #011627 12%, transparent 12.5%, transparent 87%, #011627 87.5%, #011627),
+        linear-gradient(30deg, #000000 12%, transparent 12.5%, transparent 87%, #000000 87.5%, #000000),
+        linear-gradient(150deg, #000000 12%, transparent 12.5%, transparent 87%, #000000 87.5%, #000000),
+        linear-gradient(30deg, #000000 12%, transparent 12.5%, transparent 87%, #000000 87.5%, #000000),
+        linear-gradient(150deg, #000000 12%, transparent 12.5%, transparent 87%, #000000 87.5%, #000000),
         linear-gradient(60deg, #022137 25%, transparent 25.5%, transparent 75%, #022137 75%, #022137), 
         linear-gradient(60deg, #022137 25%, transparent 25.5%, transparent 75%, #022137 75%, #022137);
     background-size: 80px 140px;
@@ -72,10 +75,10 @@
 
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--swiss-font);
   background-color: var(--swiss-bg);
   color: var(--swiss-text);
-  transition: background-color 0.5s, color 0.5s;
+  transition: background-color 0.5s, color 0.5s, font-family 0.5s;
   margin: 0;
 }
 

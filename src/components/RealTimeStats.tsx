@@ -37,7 +37,7 @@ function RealTimeStats() {
     };
 
     return (
-        <div className="max-w-5xl w-full mx-auto flex justify-between items-end text-[var(--swiss-text)] pb-8 mb-8 border-b border-[var(--swiss-border)]">
+        <div className="max-w-5xl w-full mx-auto flex justify-between items-end text-[var(--swiss-text)] pb-2 mb-4 border-b border-[var(--swiss-border)]">
             <div className="flex gap-12 items-end">
                 <div className="flex flex-col">
                     <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 mb-2">
